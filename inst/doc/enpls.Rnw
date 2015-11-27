@@ -2,7 +2,7 @@
 \RequirePackage{url}
 \RequirePackage{amsmath}
 \RequirePackage{natbib}
-\RequirePackage[a4paper,lmargin={1.25in},rmargin={1.25in},tmargin={1in},bmargin={1in}]{geometry}
+\RequirePackage[letterpaper,lmargin={1.25in},rmargin={1.25in},tmargin={1in},bmargin={1in}]{geometry}
 
 \makeatletter
 % \VignetteIndexEntry{enpls: R Package for Ensemble Partial Least Squares Regression}
@@ -20,7 +20,7 @@ if (require('knitr')) opts_chunk$set(fig.width = 5, fig.height = 5, fig.align = 
 
 %
 <<prelim,echo=FALSE>>=
-enpls.version = '1.0'
+enpls.version = '1.1'
 @
 %
 
@@ -99,7 +99,7 @@ The function \verb|enpls.fs()| is made for ensemble PLS feature selection:
 
 <<enpls.fs,fig.cap='Top ten important variables of the \\texttt{alkanes} dataset'>>=
 set.seed(42)
-varimp = enpls.fs(x, y)
+varimp = enpls.fs(x, y, MCtimes = 100)
 print(varimp, nvar = 10L)
 plot(varimp, nvar = 10L)
 @
@@ -108,7 +108,7 @@ The top ten important varibles are printed, and plotted in Figure \ref{fig:enpls
 
 % Add more intro about the bootstrap or MC resampling here
 
-By changing the default parameters in \verb|enpls.fs()| and other functions in the \verb|enpls| package, we could control the maximum components included in each model, resampling method (Monte-Carlo or Boostrap). By setting the \verb|parallel| parameter to an ($>1$) integer, the model fitting will be done in parallel, which will increase the computation speed significantly.
+By changing the default parameters in \verb|enpls.fs()| and other functions in the \verb|enpls| package, we could control the maximum components included in each model, resampling method (Monte-Carlo or Bootstrap). By setting the \verb|parallel| parameter to an ($>1$) integer, the model fitting will be done in parallel, which will increase the computation speed significantly.
 
 \section{Ensemble PLS for Outlier Detection}
 
@@ -133,7 +133,7 @@ In the other hand, in linear models, if an external data point $x_i$ is being pr
 The function \verb|enpls.od()| is provided for outlier detection:
 
 <<enpls.od,fig.cap='Outlier detection result of the \\texttt{alkanes} dataset'>>=
-od = enpls.od(x, y)
+od = enpls.od(x, y, MCtimes = 100)
 plot(od, criterion = 'sd')
 @
 
@@ -154,7 +154,7 @@ Ensemble methods, like bagging \citep{breiman1996bagging} and boosting \citep{fr
 For fitting ensemble partial least squares regression models, use \verb|enpls.en()|:
 
 <<enpls.en>>=
-enpls.fit = enpls.en(x, y)
+enpls.fit = enpls.en(x, y, MCtimes = 100)
 @
 
 % Add more intro about the bootstrap or MC resampling here
@@ -163,7 +163,7 @@ With the fitted object \verb|enpls.fit|, we could predict new $X$ with \verb|pre
 
 <<predict.enpls.en,fig.cap='Experimental values vs. predicted values'>>=
 y.pred = predict(enpls.fit, newx = x)
-plot(y, y.pred, xlim = range(y), ylim = range(y), 
+plot(y, y.pred, xlim = range(y), ylim = range(y),
      xlab = 'Experimental', ylab = 'Predicted')
 abline(a = 0L, b = 1L)
 @
@@ -174,24 +174,13 @@ Figure \ref{fig:predict.enpls.en} shows the experimental values and predicted va
 
 For ensemble partial least squares, \verb|cv.enpls()| is used for $k$-fold cross validation:
 
-<<cv.enpls,eval=FALSE>>=
-cv.enplsfit = cv.enpls(x, y)
+<<cv.enpls,fig.cap='Cross validation result: experimental values vs. predicted values'>>=
+cv.enpls.fit = cv.enpls(x, y, MCtimes = 20)
 print(cv.enpls.fit)
-
-## Cross Validation Result for Ensemble Partial Least Squares
-## ---
-## RMSE = 3.2935, R2 = 0.999968
-
 plot(cv.enpls.fit)
 @
 
 Then we printed the cross validation result: RMSE and $R^2$. The argument \verb|nfolds| controls the fold number (default is $5$). See \verb|?cv.enpls| for details. Figure \ref{fig:plot.cv.enpls} shows the experimental values and the predicted values of the cross validation result.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.75\textwidth]{fig/plot-cv-enpls.pdf}
-\caption{Cross validation result: experimental values vs. predicted values} \label{fig:plot.cv.enpls}
-\end{figure}
 
 \bibliographystyle{jss}
 \nocite{*} % list uncited bibs
