@@ -1,36 +1,40 @@
-## ----knitropts,echo=FALSE,message=FALSE----------------------------------
-if (require('knitr')) opts_chunk$set(fig.width = 5, fig.height = 5, fig.align = 'center', tidy = FALSE, warning = FALSE, cache = TRUE)
+## ------------------------------------------------------------------------
+library("enpls")
+library("ggplot2")
 
-## ----prelim,echo=FALSE---------------------------------------------------
-enpls.version = '1.1'
+data("logd1k")
+x = logd1k$x
+y = logd1k$y
+head(x)[, 1:5]
+head(y)
 
-## ----load-package--------------------------------------------------------
-require(enpls)
-data(alkanes)
-x = alkanes$x
-y = alkanes$y
-
-## ----enpls.fs,fig.cap='Top ten important variables of the \\texttt{alkanes} dataset'----
+## ---- fig.width = 8, fig.height = 8, out.width = 600, out.height = 600----
 set.seed(42)
-varimp = enpls.fs(x, y, MCtimes = 100)
-print(varimp, nvar = 10L)
-plot(varimp, nvar = 10L)
+fit = enspls.fit(x, y, ratio = 0.7, MCtimes = 20, maxcomp = 3)
+y.pred = predict(fit, newx = x)
 
-## ----enpls.od,fig.cap='Outlier detection result of the \\texttt{alkanes} dataset'----
-od = enpls.od(x, y, MCtimes = 100)
-plot(od, criterion = 'sd')
+df = data.frame(y, y.pred)
+ggplot(df, aes_string(x = "y", y = "y.pred")) +
+  geom_abline(slope = 1, intercept = 0, colour = "darkgrey") +
+  geom_point(size = 3, shape = 1, alpha = 0.8) +
+  coord_fixed(ratio = 1) +
+  xlab("Observed Response") +
+  ylab("Predicted Response")
 
-## ----enpls.en------------------------------------------------------------
-enpls.fit = enpls.en(x, y, MCtimes = 100)
+## ---- fig.width = 8, fig.height = 8, out.width = 600, out.height = 600----
+cv.fit = cv.enspls(x, y, nfolds = 5, ratio = 0.7,
+                   MCtimes = 10, maxcomp = 3, verbose = FALSE)
+print(cv.fit)
+plot(cv.fit)
 
-## ----predict.enpls.en,fig.cap='Experimental values vs. predicted values'----
-y.pred = predict(enpls.fit, newx = x)
-plot(y, y.pred, xlim = range(y), ylim = range(y),
-     xlab = 'Experimental', ylab = 'Predicted')
-abline(a = 0L, b = 1L)
+## ---- fig.width = 8, fig.height = 8, out.width = 600, out.height = 600----
+fs = enspls.fs(x, y, ratio = 0.7, MCtimes = 20, maxcomp = 3)
+print(fs, nvar = 10)
+plot(fs, nvar = 10)
+plot(fs, type = "boxplot", nvar = 10)
 
-## ----cv.enpls,fig.cap='Cross validation result: experimental values vs. predicted values'----
-cv.enpls.fit = cv.enpls(x, y, MCtimes = 20)
-print(cv.enpls.fit)
-plot(cv.enpls.fit)
+## ---- fig.width = 8, fig.height = 8, out.width = 600, out.height = 600----
+od = enspls.od(x, y, ratio = 0.8, MCtimes = 20, maxcomp = 3)
+plot(od, prob = 0.05)
+plot(od, criterion = "sd", sdtimes = 2)
 

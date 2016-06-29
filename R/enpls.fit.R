@@ -1,6 +1,6 @@
-#' Ensemble Partial Least Squares for Feature Selection
+#' Ensemble Partial Least Squares Regression
 #'
-#' Feature selection with ensemble partial least squares.
+#' Ensemble partial least squares regression.
 #'
 #' @param x predictor matrix
 #' @param y response vector
@@ -12,19 +12,16 @@
 #' @param parallel Integer. Number of CPU cores to use.
 #' Default is \code{1} (not parallelized).
 #'
-#' @return A list containing two components:
-#' \itemize{
-#' \item \code{variable.importance} - a vector of variable importance
-#' \item \code{coefficient.matrix} - original coefficient matrix
-#' }
+#' @return A list containing all partial least squares model objects.
 #'
 #' @author Nan Xiao <\url{http://nanx.me}>
 #'
-#' @seealso See \code{\link{enpls.od}} for outlier detection with
-#' ensemble partial least squares regression.
-#' See \code{\link{enpls.fit}} for ensemble partial least squares regression.
+#' @seealso See \code{\link{enpls.fs}} for feature selection with ensemble
+#' partial least squares regression.
+#' See \code{\link{enpls.od}} for outlier detection with ensemble
+#' partial least squares regression.
 #'
-#' @export enpls.fs
+#' @export enpls.fit
 #'
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach foreach "%dopar%"
@@ -41,15 +38,15 @@
 #' y = alkanes$y
 #'
 #' set.seed(42)
-#' fs = enpls.fs(x, y, MCtimes = 50)
-#' print(fs)
-#' plot(fs)
+#' fit = enpls.fit(x, y, MCtimes = 50)
+#' print(fit)
+#' predict(fit, newx = x)
 
-enpls.fs = function(x, y,
-                    maxcomp = NULL,
-                    MCtimes = 500L,
-                    method = c('mc', 'bootstrap'), ratio = 0.8,
-                    parallel = 1L) {
+enpls.fit = function(x, y,
+                     maxcomp = NULL,
+                     MCtimes = 500L,
+                     method = c('mc', 'bootstrap'), ratio = 0.8,
+                     parallel = 1L) {
 
   if (missing(x) | missing(y)) stop('Please specify both x and y')
 
@@ -70,54 +67,46 @@ enpls.fs = function(x, y,
 
   if (parallel < 1.5) {
 
-    coeflist = vector('list', MCtimes)
+    modellist = vector('list', MCtimes)
     for (i in 1L:MCtimes) {
       xtmp = x[samp.idx[[i]], ]
-      xtmp = scale(xtmp, center = TRUE, scale = TRUE)
       ytmp = y[samp.idx[[i]]]
       plsdf = as.data.frame(cbind(xtmp, 'y' = ytmp))
-      coeflist[[i]] = suppressWarnings(enpls.fs.core(plsdf, maxcomp))
+      modellist[[i]] = suppressWarnings(enpls.fit.core(plsdf, maxcomp))
     }
 
   } else {
 
     registerDoParallel(parallel)
-    coeflist = foreach(i = 1L:MCtimes) %dopar% {
+    modellist = foreach(i = 1L:MCtimes) %dopar% {
       xtmp = x[samp.idx[[i]], ]
-      xtmp = scale(xtmp, center = TRUE, scale = TRUE)
       ytmp = y[samp.idx[[i]]]
       plsdf = as.data.frame(cbind(xtmp, 'y' = ytmp))
-      enpls.fs.core(plsdf, maxcomp)
+      enpls.fit.core(plsdf, maxcomp)
     }
 
   }
 
-  coefmat = do.call(rbind, coeflist)
-
-  varimp = abs(colMeans(coefmat))/apply(coefmat, 2L, sd)
-
-  object = list('variable.importance' = varimp,
-                'coefficient.matrix'  = coefmat)
-  class(object) = 'enpls.fs'
-  return(object)
+  class(modellist) = 'enpls.fit'
+  return(modellist)
 
 }
 
-#' core function for enpls.fs
+#' core function for enpls.fit
 #'
 #' select the best ncomp with cross-validation and
 #' use it to fit the complete training set.
-#' scale = FALSE
+#' scale = TRUE
 #'
-#' @return fitted coefficients
+#' @return the coefficients
 #'
 #' @keywords internal
 
-enpls.fs.core = function(plsdf, maxcomp) {
+enpls.fit.core = function(plsdf, maxcomp) {
 
   plsr.cvfit = plsr(y ~ ., data = plsdf,
                     ncomp  = maxcomp,
-                    scale  = FALSE,
+                    scale  = TRUE,
                     method = 'simpls',
                     validation = 'CV', segments = 5L)
 
@@ -126,12 +115,12 @@ enpls.fs.core = function(plsdf, maxcomp) {
 
   plsr.fit = plsr(y ~ ., data = plsdf,
                   ncomp  = cv.bestcomp,
-                  scale  = FALSE,
+                  scale  = TRUE,
                   method = 'simpls',
                   validation = 'none')
 
-  plsr.coef = drop(coef(plsr.fit))
-
-  return(plsr.coef)
+  # save cv.bestcomp for predict.enpls
+  enpls.core.fit = list('plsr.fit' = plsr.fit, 'cv.bestcomp' = cv.bestcomp)
+  return(enpls.core.fit)
 
 }
