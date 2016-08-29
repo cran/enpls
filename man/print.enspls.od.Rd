@@ -20,7 +20,7 @@ x = logd1k$x
 y = logd1k$y
 
 set.seed(42)
-od = enspls.od(x, y, MCtimes = 5, maxcomp = 3)
+od = enspls.od(x, y, reptimes = 5, maxcomp = 3)
 print(od)
 }
 \author{
@@ -28,6 +28,6 @@ Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
 See \code{\link{enspls.od}} for outlier detection with
-ensemble sparse partial least squares regression.
+ensemble sparse partial least squares regressions.
 }
 

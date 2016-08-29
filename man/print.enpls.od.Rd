@@ -20,7 +20,7 @@ x = alkanes$x
 y = alkanes$y
 
 set.seed(42)
-od = enpls.od(x, y, MCtimes = 50)
+od = enpls.od(x, y, reptimes = 50)
 print(od)
 }
 \author{
@@ -28,6 +28,6 @@ Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
 See \code{\link{enpls.od}} for outlier detection with
-ensemble partial least squares regression.
+ensemble partial least squares regressions.
 }
 

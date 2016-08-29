@@ -4,25 +4,27 @@
 \alias{enspls.od}
 \title{Ensemble Sparse Partial Least Squares for Outlier Detection}
 \usage{
-enspls.od(x, y, maxcomp = 5L, alpha = seq(0.2, 0.8, 0.2), MCtimes = 500L,
-  method = c("mc", "bootstrap"), ratio = 0.8, parallel = 1L)
+enspls.od(x, y, maxcomp = 5L, alpha = seq(0.2, 0.8, 0.2), reptimes = 500L,
+  method = c("mc", "boot"), ratio = 0.8, parallel = 1L)
 }
 \arguments{
-\item{x}{predictor matrix}
+\item{x}{Predictor matrix.}
 
-\item{y}{response vector}
+\item{y}{Response vector.}
 
-\item{maxcomp}{Maximum number of components included within the models,
-if not specified, default is 5.}
+\item{maxcomp}{Maximum number of components included within each model.
+If not specified, will use 5 by default.}
 
 \item{alpha}{Parameter (grid) controlling sparsity of the model.
 If not specified, default is \code{seq(0.2, 0.8, 0.2)}.}
 
-\item{MCtimes}{times of Monte-Carlo}
+\item{reptimes}{Number of models to build with Monte-Carlo resampling
+or bootstrapping.}
 
-\item{method}{\code{"mc"} or \code{"bootstrap"}. Default is \code{"mc"}.}
+\item{method}{Resampling method. \code{"mc"} (Monte-Carlo resampling)
+or \code{"boot"} (bootstrapping). Default is \code{"mc"}.}
 
-\item{ratio}{sample ratio used when \code{method = "mc"}}
+\item{ratio}{Sampling ratio used when \code{method = "mc"}.}
 
 \item{parallel}{Integer. Number of CPU cores to use.
 Default is \code{1} (not parallelized).}
@@ -42,7 +44,7 @@ Outlier detection with ensemble sparse partial least squares.
 \note{
 To maximize the probablity that each observation can
 be selected in the test set (thus the prediction uncertainty
-can be measured), please try setting a large \code{MCtimes}.
+can be measured), please try setting a large \code{reptimes}.
 }
 \examples{
 data("logd1k")
@@ -50,7 +52,7 @@ x = logd1k$x
 y = logd1k$y
 
 set.seed(42)
-od = enspls.od(x, y, MCtimes = 5, maxcomp = 3)
+od = enspls.od(x, y, reptimes = 5, maxcomp = 3)
 plot(od, prob = 0.1)
 plot(od, criterion = "sd", sdtimes = 1)
 }
@@ -58,9 +60,9 @@ plot(od, criterion = "sd", sdtimes = 1)
 Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
-See \code{\link{enspls.fs}} for feature selection with
-ensemble sparse partial least squares regression.
-See \code{\link{enspls.fit}} for ensemble sparse
-partial least squares regression.
+See \code{\link{enspls.fs}} for measuring feature importance
+with ensemble sparse partial least squares regressions.
+See \code{\link{enspls.fit}} for fitting ensemble sparse
+partial least squares regression models.
 }
 

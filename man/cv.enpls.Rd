@@ -7,15 +7,15 @@
 cv.enpls(x, y, nfolds = 5L, verbose = TRUE, ...)
 }
 \arguments{
-\item{x}{predictor matrix}
+\item{x}{Predictor matrix.}
 
-\item{y}{response vector}
+\item{y}{Response vector.}
 
-\item{nfolds}{number of folds - default is \code{5}.}
+\item{nfolds}{Number of folds, default is \code{5}.}
 
-\item{verbose}{shall we print the cross validation process}
+\item{verbose}{Shall we print out the progress of cross-validation?}
 
-\item{...}{other arguments that can be passed to \code{\link{enpls.fit}}}
+\item{...}{Arguments to be passed to \code{\link{enpls.fit}}.}
 }
 \value{
 A list containing:
@@ -33,7 +33,7 @@ K-fold cross validation for ensemble partial least squares regression.
 \note{
 To maximize the probablity that each observation can
 be selected in the test set (thus the prediction uncertainty
-can be measured), please try setting a large \code{MCtimes}.
+can be measured), please try setting a large \code{reptimes}.
 }
 \examples{
 data("alkanes")
@@ -41,7 +41,7 @@ x = alkanes$x
 y = alkanes$y
 
 set.seed(42)
-cvfit = cv.enpls(x, y, MCtimes = 10)
+cvfit = cv.enpls(x, y, reptimes = 10)
 print(cvfit)
 plot(cvfit)
 }
@@ -50,6 +50,6 @@ Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
 See \code{\link{enpls.fit}} for ensemble
-partial least squares regression.
+partial least squares regressions.
 }
 

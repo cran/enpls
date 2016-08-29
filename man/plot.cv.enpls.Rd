@@ -9,13 +9,13 @@
 \arguments{
 \item{x}{An object of class \code{cv.enpls}.}
 
-\item{xlim}{x vector of lenght 2, x axis limits of the plot}
+\item{xlim}{x Vector of length 2 - x axis limits of the plot.}
 
-\item{ylim}{y vector of lenght 2, y axis limits of the plot}
+\item{ylim}{y Vector of length 2 - y axis limits of the plot.}
 
-\item{main}{Plot title, not used.}
+\item{main}{Plot title, not used currently.}
 
-\item{...}{Additional graphical parameters, not used.}
+\item{...}{Additional graphical parameters, not used currently.}
 }
 \description{
 Plot cv.enpls object
@@ -26,14 +26,14 @@ x = alkanes$x
 y = alkanes$y
 
 set.seed(42)
-cvfit = cv.enpls(x, y, MCtimes = 10)
+cvfit = cv.enpls(x, y, reptimes = 10)
 plot(cvfit)
 }
 \author{
 Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
-See \code{\link{cv.enpls}} for ensemble
-partial least squares regression.
+See \code{\link{cv.enpls}} for cross-validation of
+ensemble partial least squares regression models.
 }
 

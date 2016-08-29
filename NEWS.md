@@ -36,3 +36,11 @@ Max Kuhn <max.kuhn@pfizer.com>.
 ## IMPROVEMENTS
 
 * Improvements on documentation; rewritten vignette
+
+# CHANGES IN enpls VERSION 4.0 (2016-08-28)
+
+## IMPROVEMENTS
+
+* General improvements on function documentation
+* Changing the argument name `MCtimes` to `reptimes`
+* Changing the option name `"bootstrap"` to `"boot"`

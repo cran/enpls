@@ -20,14 +20,14 @@ x = alkanes$x
 y = alkanes$y
 
 set.seed(42)
-fit = enpls.fit(x, y, MCtimes = 50)
+fit = enpls.fit(x, y, reptimes = 50)
 print(fit)
 }
 \author{
 Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
-See \code{\link{enpls.fit}} for ensemble
-partial least squares regression.
+See \code{\link{enpls.fit}} for fitting ensemble
+partial least squares regression models.
 }
 

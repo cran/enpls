@@ -11,7 +11,7 @@
 
 \item{sort}{Should the variables be sorted in decreasing order of importance?}
 
-\item{nvar}{How many variables to show? Ignored if \code{sort = FALSE}.}
+\item{nvar}{Number of top variables to show. Ignored if \code{sort = FALSE}.}
 
 \item{...}{Additional parameters for \code{\link{print}}.}
 }
@@ -24,14 +24,14 @@ x = logd1k$x
 y = logd1k$y
 
 set.seed(42)
-fs = enspls.fs(x, y, MCtimes = 5, maxcomp = 3)
+fs = enspls.fs(x, y, reptimes = 5, maxcomp = 3)
 print(fs, nvar = 10L)
 }
 \author{
 Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
-See \code{\link{enspls.fs}} for feature selection with
-ensemble sparse partial least squares regression.
+See \code{\link{enspls.fs}} for measuring feature importance with
+ensemble sparse partial least squares regressions.
 }
 

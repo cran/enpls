@@ -1,14 +1,16 @@
-#' Ensemble Partial Least Squares for Feature Selection
+#' Ensemble Partial Least Squares for Measuring Feature Importance
 #'
-#' Feature selection with ensemble partial least squares.
+#' Measuring feature importance with ensemble partial least squares.
 #'
-#' @param x predictor matrix
-#' @param y response vector
-#' @param maxcomp Maximum number of components included within the models,
-#' if not specified, default is the variable (column) numbers in x.
-#' @param MCtimes times of Monte-Carlo
-#' @param method \code{"mc"} or \code{"bootstrap"}. Default is \code{"mc"}.
-#' @param ratio sample ratio used when \code{method = "mc"}
+#' @param x Predictor matrix.
+#' @param y Response vector.
+#' @param maxcomp Maximum number of components included within each model.
+#' If not specified, will use the variable (column) numbers in \code{x}.
+#' @param reptimes Number of models to build with Monte-Carlo resampling
+#' or bootstrapping.
+#' @param method Resampling method. \code{"mc"} (Monte-Carlo resampling)
+#' or \code{"boot"} (bootstrapping). Default is \code{"mc"}.
+#' @param ratio Sampling ratio used when \code{method = "mc"}.
 #' @param parallel Integer. Number of CPU cores to use.
 #' Default is \code{1} (not parallelized).
 #'
@@ -21,19 +23,14 @@
 #' @author Nan Xiao <\url{http://nanx.me}>
 #'
 #' @seealso See \code{\link{enpls.od}} for outlier detection with
-#' ensemble partial least squares regression.
-#' See \code{\link{enpls.fit}} for ensemble partial least squares regression.
+#' ensemble partial least squares regressions.
+#' See \code{\link{enpls.fit}} for fitting ensemble partial least
+#' squares regression models.
 #'
 #' @export enpls.fs
 #'
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach foreach "%dopar%"
-#'
-#' @references
-#' Dongsheng Cao, Yizeng Liang, Qingsong Xu, Yifeng Yun, and Hongdong Li.
-#' "Toward better QSAR/QSPR modeling: simultaneous outlier detection and
-#' variable selection using distribution of model features."
-#' \emph{Journal of computer-aided molecular design} 25, no. 1 (2011): 67--80.
 #'
 #' @examples
 #' data("alkanes")
@@ -41,14 +38,14 @@
 #' y = alkanes$y
 #'
 #' set.seed(42)
-#' fs = enpls.fs(x, y, MCtimes = 50)
+#' fs = enpls.fs(x, y, reptimes = 50)
 #' print(fs)
 #' plot(fs)
 
 enpls.fs = function(x, y,
                     maxcomp = NULL,
-                    MCtimes = 500L,
-                    method = c('mc', 'bootstrap'), ratio = 0.8,
+                    reptimes = 500L,
+                    method = c('mc', 'boot'), ratio = 0.8,
                     parallel = 1L) {
 
   if (missing(x) | missing(y)) stop('Please specify both x and y')
@@ -58,20 +55,20 @@ enpls.fs = function(x, y,
   method = match.arg(method)
 
   x.row = nrow(x)
-  samp.idx = vector('list', MCtimes)
+  samp.idx = vector('list', reptimes)
 
   if (method == 'mc') {
-    for (i in 1L:MCtimes) samp.idx[[i]] = sample(1L:x.row, round(x.row * ratio))
+    for (i in 1L:reptimes) samp.idx[[i]] = sample(1L:x.row, round(x.row * ratio))
   }
 
-  if (method == 'bootstrap') {
-    for (i in 1L:MCtimes) samp.idx[[i]] = sample(1L:x.row, x.row, replace = TRUE)
+  if (method == 'boot') {
+    for (i in 1L:reptimes) samp.idx[[i]] = sample(1L:x.row, x.row, replace = TRUE)
   }
 
   if (parallel < 1.5) {
 
-    coeflist = vector('list', MCtimes)
-    for (i in 1L:MCtimes) {
+    coeflist = vector('list', reptimes)
+    for (i in 1L:reptimes) {
       xtmp = x[samp.idx[[i]], ]
       xtmp = scale(xtmp, center = TRUE, scale = TRUE)
       ytmp = y[samp.idx[[i]]]
@@ -82,7 +79,7 @@ enpls.fs = function(x, y,
   } else {
 
     registerDoParallel(parallel)
-    coeflist = foreach(i = 1L:MCtimes) %dopar% {
+    coeflist = foreach(i = 1L:reptimes) %dopar% {
       xtmp = x[samp.idx[[i]], ]
       xtmp = scale(xtmp, center = TRUE, scale = TRUE)
       ytmp = y[samp.idx[[i]]]

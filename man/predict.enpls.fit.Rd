@@ -11,7 +11,8 @@
 
 \item{newx}{New data to predict with.}
 
-\item{method}{Use \code{mean} or \code{median} as the final prediction.}
+\item{method}{Use \code{"mean"} or \code{"median"} to create
+the final prediction.}
 
 \item{...}{Additional parameters for \code{\link{predict}}.}
 }
@@ -27,11 +28,11 @@ x = alkanes$x
 y = alkanes$y
 
 set.seed(42)
-fit = enpls.fit(x, y, MCtimes = 50)
+fit = enpls.fit(x, y, reptimes = 50)
 y.pred = predict(fit, newx = x)
 plot(y, y.pred, xlim = range(y), ylim = range(y))
 abline(a = 0L, b = 1L)
-y.pred.med = predict(fit, newx = x, method = 'median')
+y.pred.med = predict(fit, newx = x, method = "median")
 plot(y, y.pred.med, xlim = range(y), ylim = range(y))
 abline(a = 0L, b = 1L)
 }
@@ -39,7 +40,7 @@ abline(a = 0L, b = 1L)
 Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
-See \code{\link{enpls.fit}} for ensemble
-partial least squares regression.
+See \code{\link{enpls.fit}} for fitting ensemble
+partial least squares regression models.
 }
 

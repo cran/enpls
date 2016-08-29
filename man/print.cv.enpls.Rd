@@ -20,14 +20,14 @@ x = alkanes$x
 y = alkanes$y
 
 set.seed(42)
-cvfit = cv.enpls(x, y, MCtimes = 10)
+cvfit = cv.enpls(x, y, reptimes = 10)
 print(cvfit)
 }
 \author{
 Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
-See \code{\link{cv.enpls}} for ensemble
-partial least squares regression.
+See \code{\link{cv.enpls}} for cross-validation of ensemble
+partial least squares regression models.
 }
 

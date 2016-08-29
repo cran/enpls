@@ -22,14 +22,14 @@ x = logd1k$x
 y = logd1k$y
 
 set.seed(42)
-cvfit = cv.enspls(x, y, MCtimes = 10)
+cvfit = cv.enspls(x, y, reptimes = 10)
 print(cvfit)}
 }
 \author{
 Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
-See \code{\link{cv.enspls}} for ensemble sparse
-partial least squares regression.
+See \code{\link{cv.enspls}} for cross-validation of
+ensemble sparse partial least squares regression models.
 }
 

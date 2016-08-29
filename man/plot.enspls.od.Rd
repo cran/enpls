@@ -10,12 +10,12 @@
 \arguments{
 \item{x}{An object of class \code{enspls.od}.}
 
-\item{criterion}{Criterion of being outlier,
-could be \code{"quantile"} or \code{"sd"}.}
+\item{criterion}{Criterion of being classified as an outlier,
+can be \code{"quantile"} or \code{"sd"}.}
 
-\item{prob}{Quantile probability as cut-off.}
+\item{prob}{Quantile probability as the cut-off value.}
 
-\item{sdtimes}{Times of standard deviation as cut-off.}
+\item{sdtimes}{Times of standard deviation as the cut-off value.}
 
 \item{main}{Plot title.}
 
@@ -30,7 +30,7 @@ x = logd1k$x
 y = logd1k$y
 
 set.seed(42)
-od = enspls.od(x, y, MCtimes = 4, maxcomp = 2)
+od = enspls.od(x, y, reptimes = 4, maxcomp = 2)
 plot(od, criterion = "quantile", prob = 0.1)
 plot(od, criterion = "sd", sdtimes = 1)
 }
@@ -39,6 +39,6 @@ Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
 See \code{\link{enspls.od}} for outlier detection with
-ensemble sparse partial least squares regression.
+ensemble sparse partial least squares regressions.
 }
 
