@@ -1,7 +1,7 @@
 Package: enpls
 Type: Package
 Title: Ensemble Partial Least Squares Regression
-Version: 4.0
+Version: 4.5
 Author: Nan Xiao <me@nanx.me>, Dong-Sheng Cao <oriental-cds@163.com>,
     Miao-Zhu Li <miaozhu.li@duke.edu>, Qing-Song Xu <qsxu@csu.edu.cn>
 Maintainer: Nan Xiao <me@nanx.me>
@@ -16,6 +16,6 @@ Imports: pls, spls, foreach, doParallel, ggplot2, reshape2
 Suggests: knitr, rmarkdown
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2016-08-29 13:34:02 UTC; jimmy
+Packaged: 2016-09-15 06:14:22 UTC; jimmy
 Repository: CRAN
-Date/Publication: 2016-08-29 17:44:26
+Date/Publication: 2016-09-15 10:54:50
