@@ -148,7 +148,7 @@ print.enpls.fs = function(x, sort = TRUE, nvar = NULL, ...) {
 #' y = alkanes$y
 #'
 #' set.seed(42)
-#' od = enpls.od(x, y, reptimes = 50)
+#' od = enpls.od(x, y, reptimes = 40)
 #' print(od)
 
 print.enpls.od = function(x, ...) {
@@ -163,5 +163,63 @@ print.enpls.od = function(x, ...) {
   cat('---\n')
   cat('Residual SD for each sample:\n')
   print(x$'error.sd')
+
+}
+
+#' Print enpls.ad Object
+#'
+#' Print enpls.ad object.
+#'
+#' @param x An object of class \code{enpls.ad}.
+#' @param ... Additional parameters for \code{\link{print}}.
+#'
+#' @author Nan Xiao <\url{http://nanx.me}>
+#'
+#' @seealso See \code{\link{enpls.ad}} for model applicability domain
+#' evaluation with ensemble partial least squares regressions.
+#'
+#' @method print enpls.ad
+#'
+#' @export
+#'
+#' @examples
+#' data("alkanes")
+#' x = alkanes$x
+#' y = alkanes$y
+#'
+#' # training set
+#' x.tr = x[1:100, ]
+#' y.tr = y[1:100]
+#'
+#' # two test sets
+#' x.te = list("test.1" = x[101:150, ],
+#'             "test.2" = x[151:207, ])
+#' y.te = list("test.1" = y[101:150],
+#'             "test.2" = y[151:207])
+#'
+#' set.seed(42)
+#' ad = enpls.ad(x.tr, y.tr, x.te, y.te,
+#'               space = "variable", method = "mc",
+#'               ratio = 0.9, reptimes = 50)
+#' print(ad)
+
+print.enpls.ad = function(x, ...) {
+
+  if (!inherits(x, 'enpls.ad'))
+    stop('This function only works for objects of class "enpls.ad"')
+
+  cat('Model Applicability Domain Evaluation by ENPLS\n')
+  cat('---\n')
+  cat('Absolute mean prediction error for each training set sample:\n')
+  print(x$'tr.error.mean')
+  cat('---\n')
+  cat('Prediction error SD for each training set sample:\n')
+  print(x$'tr.error.sd')
+  cat('---\n')
+  cat('Absolute mean prediction error for each test set sample:\n')
+  print(x$'te.error.mean')
+  cat('---\n')
+  cat('Prediction error SD for each test set sample:\n')
+  print(x$'te.error.sd')
 
 }

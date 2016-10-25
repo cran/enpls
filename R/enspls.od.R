@@ -46,7 +46,8 @@
 #' y = logd1k$y
 #'
 #' set.seed(42)
-#' od = enspls.od(x, y, reptimes = 5, maxcomp = 3)
+#' od = enspls.od(x, y, reptimes = 5, maxcomp = 3,
+#'                alpha = c(0.3, 0.6, 0.9))
 #' plot(od, prob = 0.1)
 #' plot(od, criterion = "sd", sdtimes = 1)
 
@@ -155,7 +156,7 @@ enspls.od.core = function(x.sample, y.sample, x.remain, y.remain,
                   K = cv.bestcomp, eta = cv.bestalpha,
                   scale.x = TRUE, scale.y = FALSE)
 
-  pred = predict(spls.fit, newdata = x.remain)
+  pred = predict(spls.fit, newx = x.remain)
 
   error = y.remain - pred
   names(error) = NULL

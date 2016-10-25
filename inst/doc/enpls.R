@@ -38,3 +38,25 @@ od = enspls.od(x, y, ratio = 0.8, reptimes = 20, maxcomp = 3)
 plot(od, prob = 0.05)
 plot(od, criterion = "sd", sdtimes = 2)
 
+## ---- fig.width = 8, fig.height = 8, out.width = 600, out.height = 600----
+# remove low variance variables
+x = x[, -c(17, 52, 59)]
+
+# make training set
+x.tr = x[1:500, ]
+y.tr = y[1:500]
+
+# make two test sets
+x.te = list("test.1" = x[501:700, ],
+            "test.2" = x[701:800, ])
+y.te = list("test.1" = y[501:700],
+            "test.2" = y[701:800])
+
+ad = enspls.ad(x.tr, y.tr, x.te, y.te,
+               maxcomp = 3, space = "variable", method = "mc",
+               ratio = 0.8, reptimes = 50)
+plot(ad)
+
+## ---- eval = FALSE-------------------------------------------------------
+#  plot(ad, type = "interactive")
+

@@ -63,7 +63,8 @@ print.cv.enspls = function(x, ...) {
 #' y = logd1k$y
 #'
 #' set.seed(42)
-#' fit = enspls.fit(x, y, reptimes = 5, maxcomp = 3)
+#' fit = enspls.fit(x, y, reptimes = 5, maxcomp = 3,
+#'                  alpha = c(0.3, 0.6, 0.9))
 #' print(fit)
 
 print.enspls.fit = function(x, ...) {
@@ -108,7 +109,8 @@ print.enspls.fit = function(x, ...) {
 #' y = logd1k$y
 #'
 #' set.seed(42)
-#' fs = enspls.fs(x, y, reptimes = 5, maxcomp = 3)
+#' fs = enspls.fs(x, y, reptimes = 5, maxcomp = 3,
+#'                alpha = c(0.3, 0.6, 0.9))
 #' print(fs, nvar = 10L)
 
 print.enspls.fs = function(x, sort = TRUE, nvar = NULL, ...) {
@@ -151,7 +153,8 @@ print.enspls.fs = function(x, sort = TRUE, nvar = NULL, ...) {
 #' y = logd1k$y
 #'
 #' set.seed(42)
-#' od = enspls.od(x, y, reptimes = 5, maxcomp = 3)
+#' od = enspls.od(x, y, reptimes = 5, maxcomp = 3,
+#'                alpha = c(0.3, 0.6, 0.9))
 #' print(od)
 
 print.enspls.od = function(x, ...) {
@@ -166,5 +169,65 @@ print.enspls.od = function(x, ...) {
   cat('---\n')
   cat('Residual SD for each sample:\n')
   print(x$'error.sd')
+
+}
+
+#' Print enspls.ad Object
+#'
+#' Print enspls.ad object.
+#'
+#' @param x An object of class \code{enspls.ad}.
+#' @param ... Additional parameters for \code{\link{print}}.
+#'
+#' @author Nan Xiao <\url{http://nanx.me}>
+#'
+#' @seealso See \code{\link{enspls.ad}} for model applicability domain
+#' evaluation with ensemble sparse partial least squares regressions.
+#'
+#' @method print enspls.ad
+#'
+#' @export
+#'
+#' @examples
+#' data("logd1k")
+#' # remove low variance variables
+#' x = logd1k$x[, -c(17, 52, 59)]
+#' y = logd1k$y
+#'
+#' # training set
+#' x.tr = x[1:300, ]
+#' y.tr = y[1:300]
+#'
+#' # two test sets
+#' x.te = list("test.1" = x[301:400, ],
+#'             "test.2" = x[401:500, ])
+#' y.te = list("test.1" = y[301:400],
+#'             "test.2" = y[401:500])
+#'
+#' set.seed(42)
+#' ad = enspls.ad(x.tr, y.tr, x.te, y.te,
+#'                maxcomp = 3, alpha = c(0.3, 0.6, 0.9),
+#'                space = "variable", method = "mc",
+#'                ratio = 0.8, reptimes = 10)
+#' print(ad)
+
+print.enspls.ad = function(x, ...) {
+
+  if (!inherits(x, 'enspls.ad'))
+    stop('This function only works for objects of class "enspls.ad"')
+
+  cat('Model Applicability Domain Evaluation by ENSPLS\n')
+  cat('---\n')
+  cat('Absolute mean prediction error for each training set sample:\n')
+  print(x$'tr.error.mean')
+  cat('---\n')
+  cat('Prediction error SD for each training set sample:\n')
+  print(x$'tr.error.sd')
+  cat('---\n')
+  cat('Absolute mean prediction error for each test set sample:\n')
+  print(x$'te.error.mean')
+  cat('---\n')
+  cat('Prediction error SD for each test set sample:\n')
+  print(x$'te.error.sd')
 
 }
