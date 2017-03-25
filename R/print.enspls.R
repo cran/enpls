@@ -5,7 +5,7 @@
 #' @param x An object of class \code{cv.enspls}.
 #' @param ... Additional parameters for \code{\link{print}}.
 #'
-#' @author Nan Xiao <\url{http://nanx.me}>
+#' @author Nan Xiao <\url{https://nanx.me}>
 #'
 #' @seealso See \code{\link{cv.enspls}} for cross-validation of
 #' ensemble sparse partial least squares regression models.
@@ -32,10 +32,11 @@ print.cv.enspls = function(x, ...) {
 
   cat('Cross Validation Result for Ensemble Sparse Partial Least Squares\n')
   cat('---\n')
-  cat(paste('RMSE = ', sprintf("%.4f", x$'RMSE'), '\n',
-            'MAE = ', sprintf("%.6f", x$'MAE'), '\n',
-            'Rsquare = ', sprintf("%.6f", x$'Rsquare'), '\n',
-            sep = ''))
+  cat(paste(
+    'RMSE = ', sprintf("%.4f", x$'RMSE'), '\n',
+    'MAE = ', sprintf("%.6f", x$'MAE'), '\n',
+    'Rsquare = ', sprintf("%.6f", x$'Rsquare'), '\n',
+    sep = ''))
 
 }
 
@@ -46,7 +47,7 @@ print.cv.enspls = function(x, ...) {
 #' @param x An object of class \code{enspls.fit}.
 #' @param ... Additional parameters for \code{\link{print}}.
 #'
-#' @author Nan Xiao <\url{http://nanx.me}>
+#' @author Nan Xiao <\url{https://nanx.me}>
 #'
 #' @seealso See \code{\link{enspls.fit}} for fitting ensemble sparse
 #' partial least squares regression models.
@@ -63,8 +64,9 @@ print.cv.enspls = function(x, ...) {
 #' y = logd1k$y
 #'
 #' set.seed(42)
-#' fit = enspls.fit(x, y, reptimes = 5, maxcomp = 3,
-#'                  alpha = c(0.3, 0.6, 0.9))
+#' fit = enspls.fit(
+#'   x, y, reptimes = 5, maxcomp = 3,
+#'   alpha = c(0.3, 0.6, 0.9))
 #' print(fit)
 
 print.enspls.fit = function(x, ...) {
@@ -94,7 +96,7 @@ print.enspls.fit = function(x, ...) {
 #' @param nvar Number of top variables to show. Ignored if \code{sort = FALSE}.
 #' @param ... Additional parameters for \code{\link{print}}.
 #'
-#' @author Nan Xiao <\url{http://nanx.me}>
+#' @author Nan Xiao <\url{https://nanx.me}>
 #'
 #' @seealso See \code{\link{enspls.fs}} for measuring feature importance with
 #' ensemble sparse partial least squares regressions.
@@ -109,8 +111,9 @@ print.enspls.fit = function(x, ...) {
 #' y = logd1k$y
 #'
 #' set.seed(42)
-#' fs = enspls.fs(x, y, reptimes = 5, maxcomp = 3,
-#'                alpha = c(0.3, 0.6, 0.9))
+#' fs = enspls.fs(
+#'   x, y, reptimes = 5, maxcomp = 3,
+#'   alpha = c(0.3, 0.6, 0.9))
 #' print(fs, nvar = 10L)
 
 print.enspls.fs = function(x, sort = TRUE, nvar = NULL, ...) {
@@ -138,7 +141,7 @@ print.enspls.fs = function(x, sort = TRUE, nvar = NULL, ...) {
 #' @param x An object of class \code{enspls.od}.
 #' @param ... Additional parameters for \code{\link{print}}.
 #'
-#' @author Nan Xiao <\url{http://nanx.me}>
+#' @author Nan Xiao <\url{https://nanx.me}>
 #'
 #' @seealso See \code{\link{enspls.od}} for outlier detection with
 #' ensemble sparse partial least squares regressions.
@@ -153,8 +156,9 @@ print.enspls.fs = function(x, sort = TRUE, nvar = NULL, ...) {
 #' y = logd1k$y
 #'
 #' set.seed(42)
-#' od = enspls.od(x, y, reptimes = 5, maxcomp = 3,
-#'                alpha = c(0.3, 0.6, 0.9))
+#' od = enspls.od(
+#'   x, y, reptimes = 5, maxcomp = 3,
+#'   alpha = c(0.3, 0.6, 0.9))
 #' print(od)
 
 print.enspls.od = function(x, ...) {
@@ -179,7 +183,7 @@ print.enspls.od = function(x, ...) {
 #' @param x An object of class \code{enspls.ad}.
 #' @param ... Additional parameters for \code{\link{print}}.
 #'
-#' @author Nan Xiao <\url{http://nanx.me}>
+#' @author Nan Xiao <\url{https://nanx.me}>
 #'
 #' @seealso See \code{\link{enspls.ad}} for model applicability domain
 #' evaluation with ensemble sparse partial least squares regressions.
@@ -199,16 +203,19 @@ print.enspls.od = function(x, ...) {
 #' y.tr = y[1:300]
 #'
 #' # two test sets
-#' x.te = list("test.1" = x[301:400, ],
-#'             "test.2" = x[401:500, ])
-#' y.te = list("test.1" = y[301:400],
-#'             "test.2" = y[401:500])
+#' x.te = list(
+#'   "test.1" = x[301:400, ],
+#'   "test.2" = x[401:500, ])
+#' y.te = list(
+#'   "test.1" = y[301:400],
+#'   "test.2" = y[401:500])
 #'
 #' set.seed(42)
-#' ad = enspls.ad(x.tr, y.tr, x.te, y.te,
-#'                maxcomp = 3, alpha = c(0.3, 0.6, 0.9),
-#'                space = "variable", method = "mc",
-#'                ratio = 0.8, reptimes = 10)
+#' ad = enspls.ad(
+#'   x.tr, y.tr, x.te, y.te,
+#'   maxcomp = 3, alpha = c(0.3, 0.6, 0.9),
+#'   space = "variable", method = "mc",
+#'   ratio = 0.8, reptimes = 10)
 #' print(ad)
 
 print.enspls.ad = function(x, ...) {

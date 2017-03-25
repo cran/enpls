@@ -20,15 +20,15 @@ x = logd1k$x
 y = logd1k$y
 
 set.seed(42)
-fit = enspls.fit(x, y, reptimes = 5, maxcomp = 3,
-                 alpha = c(0.3, 0.6, 0.9))
+fit = enspls.fit(
+  x, y, reptimes = 5, maxcomp = 3,
+  alpha = c(0.3, 0.6, 0.9))
 print(fit)
-}
-\author{
-Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
 See \code{\link{enspls.fit}} for fitting ensemble sparse
 partial least squares regression models.
 }
-
+\author{
+Nan Xiao <\url{https://nanx.me}>
+}

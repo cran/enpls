@@ -20,15 +20,15 @@ x = logd1k$x
 y = logd1k$y
 
 set.seed(42)
-od = enspls.od(x, y, reptimes = 5, maxcomp = 3,
-               alpha = c(0.3, 0.6, 0.9))
+od = enspls.od(
+  x, y, reptimes = 5, maxcomp = 3,
+  alpha = c(0.3, 0.6, 0.9))
 print(od)
-}
-\author{
-Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
 See \code{\link{enspls.od}} for outlier detection with
 ensemble sparse partial least squares regressions.
 }
-
+\author{
+Nan Xiao <\url{https://nanx.me}>
+}

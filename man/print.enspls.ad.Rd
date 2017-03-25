@@ -25,23 +25,25 @@ x.tr = x[1:300, ]
 y.tr = y[1:300]
 
 # two test sets
-x.te = list("test.1" = x[301:400, ],
-            "test.2" = x[401:500, ])
-y.te = list("test.1" = y[301:400],
-            "test.2" = y[401:500])
+x.te = list(
+  "test.1" = x[301:400, ],
+  "test.2" = x[401:500, ])
+y.te = list(
+  "test.1" = y[301:400],
+  "test.2" = y[401:500])
 
 set.seed(42)
-ad = enspls.ad(x.tr, y.tr, x.te, y.te,
-               maxcomp = 3, alpha = c(0.3, 0.6, 0.9),
-               space = "variable", method = "mc",
-               ratio = 0.8, reptimes = 10)
+ad = enspls.ad(
+  x.tr, y.tr, x.te, y.te,
+  maxcomp = 3, alpha = c(0.3, 0.6, 0.9),
+  space = "variable", method = "mc",
+  ratio = 0.8, reptimes = 10)
 print(ad)
-}
-\author{
-Nan Xiao <\url{http://nanx.me}>
 }
 \seealso{
 See \code{\link{enspls.ad}} for model applicability domain
 evaluation with ensemble sparse partial least squares regressions.
 }
-
+\author{
+Nan Xiao <\url{https://nanx.me}>
+}

@@ -18,6 +18,5 @@ MAE
 Mean Absolute Error (MAE)
 }
 \author{
-Nan Xiao <\url{http://nanx.me}>
+Nan Xiao <\url{https://nanx.me}>
 }
-

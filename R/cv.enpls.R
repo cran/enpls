@@ -20,7 +20,7 @@
 #' \item \code{Rsquare} - Rsquare
 #' }
 #'
-#' @author Nan Xiao <\url{http://nanx.me}>
+#' @author Nan Xiao <\url{https://nanx.me}>
 #'
 #' @note To maximize the probablity that each observation can
 #' be selected in the test set (thus the prediction uncertainty
@@ -69,12 +69,14 @@ cv.enpls = function(x, y, nfolds = 5L, verbose = TRUE, ...) {
   MAE      = mean(abs(residual), na.rm = TRUE)
   Rsquare  = 1L - (sum((residual)^2, na.rm = TRUE)/sum((y - mean(y))^2))
 
-  object = list('ypred'    = ypred,
-                'residual' = residual,
-                'RMSE'     = RMSE,
-                'MAE'      = MAE,
-                'Rsquare'  = Rsquare)
-  class(object) = 'cv.enpls'
-  return(object)
+  res = list(
+    'ypred'    = ypred,
+    'residual' = residual,
+    'RMSE'     = RMSE,
+    'MAE'      = MAE,
+    'Rsquare'  = Rsquare)
+  class(res) = 'cv.enpls'
+
+  res
 
 }
