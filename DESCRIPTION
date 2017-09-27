@@ -1,12 +1,12 @@
 Package: enpls
 Type: Package
 Title: Ensemble Partial Least Squares Regression
-Version: 5.8
+Version: 5.9
 Authors@R: c(
     person("Nan", "Xiao", email = "me@nanx.me", role = c("aut", "cre")),
-    person("Dongsheng", "Cao", role = c("aut")),
-    person("Miaozhu", "Li", email = "miaozhu.li@duke.edu", role = c("aut")),
-    person("Qingsong", "Xu", email = "qsxu@csu.edu.cn", role = c("aut"))
+    person("Dong-Sheng", "Cao", role = c("aut")),
+    person("Miao-Zhu", "Li", email = "miaozhu.li@duke.edu", role = c("aut")),
+    person("Qing-Song", "Xu", email = "qsxu@csu.edu.cn", role = c("aut"))
     )
 Maintainer: Nan Xiao <me@nanx.me>
 Description: An algorithmic framework for measuring feature importance,
@@ -21,12 +21,13 @@ LazyData: TRUE
 VignetteBuilder: knitr
 Imports: pls, spls, foreach, doParallel, ggplot2, reshape2, plotly
 Suggests: knitr, rmarkdown
-RoxygenNote: 6.0.1
+Encoding: UTF-8
+RoxygenNote: 6.0.1.9000
 NeedsCompilation: no
-Packaged: 2017-03-25 00:31:28 UTC; jimmy
+Packaged: 2017-09-27 19:42:14 UTC; nanx
 Author: Nan Xiao [aut, cre],
-  Dongsheng Cao [aut],
-  Miaozhu Li [aut],
-  Qingsong Xu [aut]
+  Dong-Sheng Cao [aut],
+  Miao-Zhu Li [aut],
+  Qing-Song Xu [aut]
 Repository: CRAN
-Date/Publication: 2017-03-25 10:58:10 UTC
+Date/Publication: 2017-09-27 20:13:25 UTC
