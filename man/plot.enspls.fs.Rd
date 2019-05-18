@@ -4,8 +4,8 @@
 \alias{plot.enspls.fs}
 \title{Plot enspls.fs object}
 \usage{
-\method{plot}{enspls.fs}(x, nvar = NULL, type = c("dotplot", "boxplot"),
-  limits = c(0, 1), main = NULL, ...)
+\method{plot}{enspls.fs}(x, nvar = NULL, type = c("dotplot",
+  "boxplot"), limits = c(0, 1), main = NULL, ...)
 }
 \arguments{
 \item{x}{An object of class \code{enspls.fs}.}
@@ -26,11 +26,11 @@ Plot enspls.fs object
 }
 \examples{
 data("logd1k")
-x = logd1k$x
-y = logd1k$y
+x <- logd1k$x
+y <- logd1k$y
 
 set.seed(42)
-fs = enspls.fs(x, y, reptimes = 5, maxcomp = 2)
+fs <- enspls.fs(x, y, reptimes = 5, maxcomp = 2)
 plot(fs, nvar = 10)
 plot(fs, type = "boxplot", limits = c(0.05, 0.95), nvar = 10)
 }

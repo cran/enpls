@@ -4,8 +4,9 @@
 \alias{enspls.fit}
 \title{Ensemble Sparse Partial Least Squares Regression}
 \usage{
-enspls.fit(x, y, maxcomp = 5L, cvfolds = 5L, alpha = seq(0.2, 0.8, 0.2),
-  reptimes = 500L, method = c("mc", "boot"), ratio = 0.8, parallel = 1L)
+enspls.fit(x, y, maxcomp = 5L, cvfolds = 5L, alpha = seq(0.2, 0.8,
+  0.2), reptimes = 500L, method = c("mc", "boot"), ratio = 0.8,
+  parallel = 1L)
 }
 \arguments{
 \item{x}{Predictor matrix.}
@@ -40,13 +41,15 @@ Ensemble sparse partial least squares regression.
 }
 \examples{
 data("logd1k")
-x = logd1k$x
-y = logd1k$y
+x <- logd1k$x
+y <- logd1k$y
 
 set.seed(42)
-fit = enspls.fit(
-  x, y, reptimes = 5, maxcomp = 3,
-  alpha = c(0.3, 0.6, 0.9))
+fit <- enspls.fit(
+  x, y,
+  reptimes = 5, maxcomp = 3,
+  alpha = c(0.3, 0.6, 0.9)
+)
 print(fit)
 predict(fit, newx = x)
 }

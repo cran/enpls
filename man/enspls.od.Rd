@@ -4,8 +4,9 @@
 \alias{enspls.od}
 \title{Ensemble Sparse Partial Least Squares for Outlier Detection}
 \usage{
-enspls.od(x, y, maxcomp = 5L, cvfolds = 5L, alpha = seq(0.2, 0.8, 0.2),
-  reptimes = 500L, method = c("mc", "boot"), ratio = 0.8, parallel = 1L)
+enspls.od(x, y, maxcomp = 5L, cvfolds = 5L, alpha = seq(0.2, 0.8,
+  0.2), reptimes = 500L, method = c("mc", "boot"), ratio = 0.8,
+  parallel = 1L)
 }
 \arguments{
 \item{x}{Predictor matrix.}
@@ -51,13 +52,15 @@ can be measured), please try setting a large \code{reptimes}.
 }
 \examples{
 data("logd1k")
-x = logd1k$x
-y = logd1k$y
+x <- logd1k$x
+y <- logd1k$y
 
 set.seed(42)
-od = enspls.od(
-  x, y, reptimes = 5, maxcomp = 3,
-  alpha = c(0.3, 0.6, 0.9))
+od <- enspls.od(
+  x, y,
+  reptimes = 5, maxcomp = 3,
+  alpha = c(0.3, 0.6, 0.9)
+)
 plot(od, prob = 0.1)
 plot(od, criterion = "sd", sdtimes = 1)
 }

@@ -4,8 +4,8 @@
 \alias{plot.enpls.od}
 \title{Plot enpls.od object}
 \usage{
-\method{plot}{enpls.od}(x, criterion = c("quantile", "sd"), prob = 0.05,
-  sdtimes = 3L, alpha = 1, main = NULL, ...)
+\method{plot}{enpls.od}(x, criterion = c("quantile", "sd"),
+  prob = 0.05, sdtimes = 3L, alpha = 1, main = NULL, ...)
 }
 \arguments{
 \item{x}{An object of class \code{enpls.od}.}
@@ -28,11 +28,11 @@ Plot enpls.od object
 }
 \examples{
 data("alkanes")
-x = alkanes$x
-y = alkanes$y
+x <- alkanes$x
+y <- alkanes$y
 
 set.seed(42)
-od = enpls.od(x, y, reptimes = 50)
+od <- enpls.od(x, y, reptimes = 50)
 plot(od, criterion = "quantile")
 plot(od, criterion = "sd")
 }

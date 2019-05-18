@@ -4,8 +4,9 @@
 \alias{enspls.fs}
 \title{Ensemble Sparse Partial Least Squares for Measuring Feature Importance}
 \usage{
-enspls.fs(x, y, maxcomp = 5L, cvfolds = 5L, alpha = seq(0.2, 0.8, 0.2),
-  reptimes = 500L, method = c("mc", "boot"), ratio = 0.8, parallel = 1L)
+enspls.fs(x, y, maxcomp = 5L, cvfolds = 5L, alpha = seq(0.2, 0.8,
+  0.2), reptimes = 500L, method = c("mc", "boot"), ratio = 0.8,
+  parallel = 1L)
 }
 \arguments{
 \item{x}{Predictor matrix.}
@@ -44,14 +45,14 @@ Measuring feature importance with ensemble sparse partial least squares.
 }
 \examples{
 data("logd1k")
-x = logd1k$x
-y = logd1k$y
+x <- logd1k$x
+y <- logd1k$y
 
 set.seed(42)
-fs = enspls.fs(x, y, reptimes = 5, maxcomp = 2)
+fs <- enspls.fs(x, y, reptimes = 5, maxcomp = 2)
 print(fs, nvar = 10)
 plot(fs, nvar = 10)
-plot(fs, type = 'boxplot', limits = c(0.05, 0.95), nvar = 10)
+plot(fs, type = "boxplot", limits = c(0.05, 0.95), nvar = 10)
 }
 \seealso{
 See \code{\link{enspls.od}} for outlier detection with
